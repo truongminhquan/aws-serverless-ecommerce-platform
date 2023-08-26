@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  tests:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -30,7 +30,7 @@ jobs:
           mkdir ~/.aws
           touch ~/.aws/credentials ~/.aws/config
           ls ~/.aws/
-      - name: lint and unit tests
+      - name: build product service
         shell: bash
         run: |
-          make ci
+          make build-products
