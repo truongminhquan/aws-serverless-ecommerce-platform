@@ -107,7 +107,7 @@ deploy_terraform () {
 
     pushd $build_dir/terraform
     terraform init
-    terraform apply --auto-aprove   
+    terraform apply --auto-approve   
     popd
 
 }
