@@ -39,7 +39,7 @@ jobs:
       - name: deploy products service
         shell: bash
         run: |
-          ls -la build
+          ls -la products/build
           make deploy-products
       
       # - uses: actions/upload-artifact@v3
