@@ -35,14 +35,19 @@ jobs:
         run: |
           make build-products
           sleep 5
-      
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: products-svc-artifact
+          path: products/build
+
       - name: deploy products service
         shell: bash
+        env:
+          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }
         run: |
           ls -la products/build
           make deploy-products
       
-      # - uses: actions/upload-artifact@v3
-      #   with:
-      #     name: products-svc-artifact
-      #     path: products/build
+

@@ -105,6 +105,9 @@ deploy_terraform () {
     echo tags: $tags
     terraform --version
 
+    pushd $build_dir/terraform
+    popd
+
 }
 
 type deploy_$TYPE | grep -q "function" &>/dev/null || {
