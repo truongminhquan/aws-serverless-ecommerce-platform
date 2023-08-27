@@ -106,6 +106,7 @@ deploy_terraform () {
     terraform --version
 
     pushd $build_dir/terraform
+    zip -r lambda_function_payload.zip ../src/validate
     terraform init
     terraform apply --auto-approve   
     popd
