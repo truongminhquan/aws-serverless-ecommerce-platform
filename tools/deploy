@@ -106,7 +106,7 @@ deploy_terraform () {
     terraform --version
 
     pushd $build_dir/terraform
-    sudo aws configure list 
+    aws configure list 
     aws s3 ls
     terraform init
     
