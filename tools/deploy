@@ -107,6 +107,7 @@ deploy_terraform () {
 
     pushd $build_dir/terraform
     aws configure list 
+    aws s3 ls
     terraform init
     
     popd
