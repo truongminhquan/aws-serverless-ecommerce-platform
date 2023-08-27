@@ -39,7 +39,6 @@ jobs:
       - name: deploy products service
         shell: bash
         run: |
-          make package-products
           ls -la build
           make deploy-products
       

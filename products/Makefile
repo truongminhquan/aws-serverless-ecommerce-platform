@@ -20,7 +20,8 @@ clean:
 	@${ROOT}/tools/clean ${SERVICE}
 
 deploy:
-	@${ROOT}/tools/deploy cloudformation ${SERVICE}
+	@${ROOT}/tools/deploy terraform ${SERVICE}
+	# @${ROOT}/tools/deploy cloudformation ${SERVICE}
 
 lint:
 	@${ROOT}/tools/lint cloudformation ${SERVICE}

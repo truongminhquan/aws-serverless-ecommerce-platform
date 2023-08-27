@@ -68,15 +68,44 @@ deploy_cloudformation () {
         echo parameters: $parameters
         echo tags: $tags
 
-        # Deploy to AWS
-        # aws cloudformation deploy \
-        #     --stack-name $stack_name \
-        #     --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND \
-        #     --parameter-overrides $parameters \
-        #     --tags $tags \
-        #     --no-fail-on-empty-changeset \
-        #     --template-file $build_dir/template.out
+        Deploy to AWS
+        aws cloudformation deploy \
+            --stack-name $stack_name \
+            --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND \
+            --parameter-overrides $parameters \
+            --tags $tags \
+            --no-fail-on-empty-changeset \
+            --template-file $build_dir/template.out
     fi
+}
+
+deploy_terraform () {
+    environment=${ENVIRONMENT:-dev}
+    stack_name=${DOMAIN:-ecommerce}-${environment}-${SERVICE}
+    artifacts_file=$build_dir/artifacts/config.${environment}.json
+
+    # Update variable for services that don't support environments
+    yq -r ' .flags.environment | if . == null then true else . end ' $service_dir/metadata.yaml | grep -q true && {
+        HAS_ENV=true
+    }
+    if [ -z $HAS_ENV ]; then
+        stack_name=${DOMAIN:-ecommerce}-$SERVICE
+        environment=prod
+        artifacts_file=$build_dir/artifacts/config.prod.json
+    fi
+
+    # Parse parameters and tags
+    parameters=$(jq -r ' .Parameters | to_entries[] | [.key, .value] | "\(.[0])=\(.[1])"' $artifacts_file)
+    tags=$(jq -r ' .Tags | to_entries[] | [.key, .value] | "\(.[0])=\(.[1])"' $artifacts_file)
+
+    # Display variables for debugging
+    echo stack_name: $stack_name
+    echo environment: $environment
+    echo parameters: $parameters
+    echo tags: $tags
+
+    Deploy to AWS
+
 }
 
 type deploy_$TYPE | grep -q "function" &>/dev/null || {
