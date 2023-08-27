@@ -30,7 +30,12 @@ jobs:
           mkdir ~/.aws
           touch ~/.aws/credentials ~/.aws/config
           ls ~/.aws/
-      - name: build product service
+      - name: build products service
         shell: bash
         run: |
-          make build-product
+          make build-products
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: products-svc-artifact
+          path: products/build
