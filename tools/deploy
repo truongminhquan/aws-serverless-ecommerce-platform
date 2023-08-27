@@ -106,7 +106,7 @@ deploy_terraform () {
     terraform --version
 
     pushd $build_dir/terraform
-    terraform init
+    terraform init -backend-config="access_key=${{ env.AWS_ACCESS_KEY_ID }}" -backend-config="secret_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
     popd
 
 }
