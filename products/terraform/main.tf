@@ -60,7 +60,9 @@ resource "aws_iam_role" "product_validate_function_iam_for_lambda" {
 
 data "archive_file" "archive_product_validate_func" {
   type        = "zip"
-  source_file = "../src/validate/"
+  source {
+    source_dir = "../src/validate"
+  }
   output_path = "lambda_function_payload.zip"
 }
 
