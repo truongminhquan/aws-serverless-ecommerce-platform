@@ -56,7 +56,6 @@ artifacts-%:
 build: $(foreach service,${SERVICES}, build-${service})
 build-%:
 	@echo "================================================"
-	@echo "[*] "
 	@echo "$*"
 	@echo "[*] $(ccblue)build $*$(ccend)"
 	@echo "================================================"

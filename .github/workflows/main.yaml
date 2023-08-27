@@ -33,4 +33,4 @@ jobs:
       - name: build product service
         shell: bash
         run: |
-          make build-products
+          make build-product
