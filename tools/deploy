@@ -106,10 +106,8 @@ deploy_terraform () {
     terraform --version
 
     pushd $build_dir/terraform
-    aws configure list 
-    aws s3 ls
     terraform init
-    
+    terraform plan   
     popd
 
 }
