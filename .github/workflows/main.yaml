@@ -1,4 +1,4 @@
-name: build
+name: build-deploy
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -34,8 +34,14 @@ jobs:
         shell: bash
         run: |
           make build-products
+          sleep 5
       
-      - uses: actions/upload-artifact@v3
-        with:
-          name: products-svc-artifact
-          path: products/build
+      - name: deploy products service
+        shell: bash
+        run: |
+          make deploy-products
+      
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: products-svc-artifact
+      #     path: products/build

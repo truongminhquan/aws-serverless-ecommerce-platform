@@ -69,13 +69,13 @@ deploy_cloudformation () {
         echo tags: $tags
 
         # Deploy to AWS
-        aws cloudformation deploy \
-            --stack-name $stack_name \
-            --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND \
-            --parameter-overrides $parameters \
-            --tags $tags \
-            --no-fail-on-empty-changeset \
-            --template-file $build_dir/template.out
+        # aws cloudformation deploy \
+        #     --stack-name $stack_name \
+        #     --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND \
+        #     --parameter-overrides $parameters \
+        #     --tags $tags \
+        #     --no-fail-on-empty-changeset \
+        #     --template-file $build_dir/template.out
     fi
 }
 
