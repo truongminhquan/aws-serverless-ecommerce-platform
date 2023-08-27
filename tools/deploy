@@ -103,8 +103,7 @@ deploy_terraform () {
     echo environment: $environment
     echo parameters: $parameters
     echo tags: $tags
-
-    Deploy to AWS
+    terraform --version
 
 }
 
