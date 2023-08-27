@@ -58,10 +58,14 @@ resource "aws_iam_role" "product_validate_function_iam_for_lambda" {
   assume_role_policy = data.aws_iam_policy_document.product_validate_function_assume_role.json
 }
 
-
+data "archive_file" "archive_product_validate_func" {
+  type        = "zip"
+  source_file = "../src/validate/"
+  output_path = "lambda_function_payload.zip"
+}
 
 resource "aws_lambda_function" "product_validate_function" {
-  filename      = "../src/validate/"
+  filename      = "lambda_function_payload.zip"
   function_name = "product_validate_function"
   role          = aws_iam_role.product_validate_function_iam_for_lambda.arn
   handler       = "main.handler"
