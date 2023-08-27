@@ -301,3 +301,6 @@ reports
 
 # Ignore VS Code
 .vscode
+
+**/.terraform
+**/.terraform.lock.hcl
