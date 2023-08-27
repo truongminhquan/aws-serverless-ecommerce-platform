@@ -8,6 +8,7 @@ artifacts:
 
 build:
 	@${ROOT}/tools/build resources ${SERVICE}
+	@${ROOT}/tools/build terraform ${SERVICE}
 	@${ROOT}/tools/build openapi ${SERVICE}
 	@${ROOT}/tools/build python3 ${SERVICE}
 	@${ROOT}/tools/build cloudformation ${SERVICE}

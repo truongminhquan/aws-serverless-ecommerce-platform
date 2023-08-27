@@ -74,6 +74,20 @@ build_resources () {
     fi
 }
 
+# Copy terraform into the build folder
+build_terraform () {
+    # Create build folder if it doesn't exist
+    if [ ! -d $build_dir ]; then
+        mkdir $build_dir
+    fi
+
+    # Copying resource files
+    if [ -d $service_dir/terraform/ ]; then
+        cp -rp $service_dir/terraform/ $build_dir/terraform/
+    fi
+}
+
+
 # Copy source code and install requirements for each function
 build_python3 () {
     # Create build folder if it doesn't exist
