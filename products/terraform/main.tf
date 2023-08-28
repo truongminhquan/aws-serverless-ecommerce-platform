@@ -97,7 +97,7 @@ resource "aws_lambda_function" "product_validate_function" {
 }
 
 resource "aws_api_gateway_rest_api" "products-svc-api-gateway" {
-  body = "${jsonencode(file("../resources/openapi.json"))}"
+  body = "${jsondecode(file("../resources/openapi.json"))}"
 
   name = "products-svc-api-gateway"
 
