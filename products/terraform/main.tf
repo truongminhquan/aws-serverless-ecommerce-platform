@@ -16,10 +16,10 @@ resource "aws_dynamodb_table" "product_table" {
   }
 
   global_secondary_index {
-    name               = "category"
-    hash_key           = "category"
-    range_key          = "productId"
-    projection_type    = "ALL"
+    name            = "category"
+    hash_key        = "category"
+    range_key       = "productId"
+    projection_type = "ALL"
   }
 }
 
@@ -53,9 +53,19 @@ data "aws_iam_policy_document" "readpolicy" {
   }
 }
 
+resource "aws_iam_policy" "readpolicy" {
+  name   = "Custom-DynamoDb-Read-Policy"
+  policy = "${data.aws_iam_policy_document.readpolicy.json}"
+}
+
 resource "aws_iam_role" "product_validate_function_iam_for_lambda" {
   name               = "iam_for_lambda"
   assume_role_policy = data.aws_iam_policy_document.product_validate_function_assume_role.json
+}
+
+resource "aws_iam_role_policy_attachment" "lambda-role-readpolicy-attachment" {
+  role       = aws_iam_role.product_validate_function_iam_for_lambda.name
+  policy_arn = aws_iam_policy.readpolicy.arn
 }
 
 resource "aws_lambda_function" "product_validate_function" {
@@ -64,17 +74,17 @@ resource "aws_lambda_function" "product_validate_function" {
   role          = aws_iam_role.product_validate_function_iam_for_lambda.arn
   handler       = "main.handler"
   architectures = ["arm64"]
-  
+
 
   runtime = "python3.9"
   environment {
     variables = {
-        ENVIRONMENT = "dev"
-      POWERTOOLS_SERVICE_NAME = "products"
+      ENVIRONMENT               = "dev"
+      POWERTOOLS_SERVICE_NAME   = "products"
       POWERTOOLS_TRACE_DISABLED = "false"
-      TABLE_NAME = "product_table"
-      LOG_LEVEL = "DEBUG"
-      EVENT_BUS_NAME = "/ecommerce/dev/platform/event-bus/name"
+      TABLE_NAME                = "product_table"
+      LOG_LEVEL                 = "DEBUG"
+      EVENT_BUS_NAME            = "/ecommerce/dev/platform/event-bus/name"
     }
   }
 }
