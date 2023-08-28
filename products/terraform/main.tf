@@ -95,3 +95,13 @@ resource "aws_lambda_function" "product_validate_function" {
     }
   }
 }
+
+resource "aws_api_gateway_rest_api" "products-svc-api-gateway" {
+  body = "${yamldecode(file("../resources/openapi.yaml"))}"
+
+  name = "products-svc-api-gateway"
+
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
+}

@@ -45,9 +45,9 @@ jobs:
         run: |
           make deploy-products
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: products-svc-artifact
-          path: products/build
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: products-svc-artifact
+      #     path: products/build
       
 
