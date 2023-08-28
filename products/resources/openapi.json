@@ -1,0 +1,115 @@
+{
+    "openapi":  "3.0.2",
+    "info": {
+      "title": "product-svc-api",
+      "version": "1.0.0",
+      "description": "Products service API definition",
+      "license": {
+        "name": "MIT-0",
+        "url": "https://github.com/aws/mit-0"
+      }
+    },
+
+    "paths": {
+        "/backend/validate": {
+            "post": {
+                "description": "Validates an array of products.\n\n__Remark__: This is an internal API that requires valid IAM credentials\nand signature.",
+                "operationId": "backendValidateProducts",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "description": "Representation of a single product type.",
+                                "required": ["productId", "name", "package", "price"],
+                                "properties": {
+                                    "productId": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "description": "Unique identifier in UUID format for the product.",
+                                        "example": "f380305b-99fe-45ba-b1ab-ba6349d141a2"
+                                    },
+                                    "createdDate": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "Product creation date.",
+                                        "example": "2020-01-23T10:53:49.131052"
+                                    },
+                                    "modifiedDate": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "description": "Product last modification date.",
+                                        "example": "2020-01-23T10:53:49.131052"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "User-facing product name."
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "description": "User-facing product category."
+                                    },
+                                    "tags": {
+                                        "type": "array",
+                                        "description": "Array of searchable tags about the product.",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "pictures": {
+                                        "type": "array",
+                                        "description": "Array of pictures about the product.",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "uri"
+                                        }
+                                    },
+                                    "package":{
+                                        "type": "object",
+                                        "description": "Dimension and weight of the packaging for a product.\n\nWidth, length and height do not have to be specific dimensions or one\nbigger than the other. They all have to represent the three dimensions of\nthe box in which the product is packaged for shipping.",
+                                        "properties": {
+                                            "width": {
+                                                "type": "integer",
+                                                "description": "Width of the package in millimeters.",
+                                                "minimum": 0
+                                            },
+                                            "length": {
+                                                "type": "integer",
+                                                "description": "Length of the package in millimeters.",
+                                                "minimum": 0
+                                            },
+                                            "height": {
+                                                "type": "integer",
+                                                "description": "Height of the package in millimeters.",
+                                                "minimum": 0
+                                            },
+                                            "weight": {
+                                                "type": "integer",
+                                                "description": "Weight of the package in grams.",
+                                                "minimum": 0
+                                            }
+                                           
+                                        }
+
+                                    },
+                                    "price": {
+                                        "type": "integer",
+                                        "description": "Price for the product.",
+                                        "minimum": 0
+                                    },
+                                    "quantity": {
+                                        "type": "integer",
+                                        "description": "Number of products",
+                                        "minimum": 1,
+                                        "default": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
