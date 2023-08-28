@@ -105,8 +105,12 @@ deploy_terraform () {
     echo tags: $tags
     terraform --version
 
+    pushd ../src/validate
+    zip -r $build_dir/terraform/lambda_function_payload.zip .
+    popd
+
     pushd $build_dir/terraform
-    zip -r lambda_function_payload.zip ../src/validate
+
     terraform init
     terraform apply --auto-approve   
     popd
