@@ -68,9 +68,16 @@ resource "aws_iam_role_policy_attachment" "lambda-role-readpolicy-attachment" {
   policy_arn = aws_iam_policy.readpolicy.arn
 }
 
+data "archive_file" "simple_lambda_zip" {
+  source_dir = "../src/validate"
+  output_path = "${path.module}/lambda_function_payload.zip"
+  type = "zip"
+}
+
 resource "aws_lambda_function" "product_validate_function" {
-  filename      = "lambda_function_payload.zip"
+  filename      =  data.archive_file.simple_lambda_zip.output_path
   function_name = "product_validate_function"
+  source_code_hash = data.archive_file.simple_lambda_zip.output_base64sha256
   role          = aws_iam_role.product_validate_function_iam_for_lambda.arn
   handler       = "main.handler"
   architectures = ["arm64"]
