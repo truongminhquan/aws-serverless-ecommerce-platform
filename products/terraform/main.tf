@@ -23,6 +23,41 @@ resource "aws_dynamodb_table" "product_table" {
   }
 }
 
+resource "aws_dynamodb_table_item" "master_item" {
+  table_name = aws_dynamodb_table.product_table.name
+  hash_key   = aws_dynamodb_table.product_table.hash_key
+
+  item = <<ITEM
+{
+  "productId": {
+    "S": "f380305b-99fe-45ba-b1ab-ba6349d141a2"
+  },
+  "name": {
+    "S": "Product1"
+  },
+  "package": {
+    "M": {
+      "height": {
+        "N": "0"
+      },
+      "length": {
+        "N": "0"
+      },
+      "weight": {
+        "N": "0"
+      },
+      "width": {
+        "N": "0"
+      }
+    }
+  },
+  "price": {
+    "N": "0"
+  }
+}
+ITEM
+}
+
 data "aws_iam_policy_document" "product_validate_function_assume_role" {
   statement {
     effect = "Allow"
