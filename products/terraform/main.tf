@@ -145,3 +145,12 @@ resource "aws_lambda_permission" "apigw" {
   # within the API Gateway "REST API".
   source_arn = "${aws_api_gateway_rest_api.products-svc-api-gateway.execution_arn}/*/*"
 }
+
+resource "aws_api_gateway_deployment" "dev_stage" {
+  depends_on = [
+    "aws_api_gateway_integration.lambda"
+  ]
+
+  rest_api_id = "${aws_api_gateway_rest_api.products-svc-api-gateway.id}"
+  stage_name  = "dev"
+}
