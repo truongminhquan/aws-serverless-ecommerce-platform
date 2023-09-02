@@ -45,6 +45,7 @@ data "aws_iam_policy_document" "readpolicy" {
       "dynamodb:ListTables",
       "dynamodb:Query",
       "dynamodb:Scan",
+      "dynamodb:BatchGetItem"
     ]
 
     resources = ["*"]
