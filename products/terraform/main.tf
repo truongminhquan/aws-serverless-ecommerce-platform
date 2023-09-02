@@ -106,15 +106,21 @@ resource "aws_api_gateway_rest_api" "products-svc-api-gateway" {
   }
 }
 
-resource "aws_api_gateway_resource" "products-svc-api-gateway-resource" {
+resource "aws_api_gateway_resource" "products-svc-api-gateway-resource-backend" {
   rest_api_id = aws_api_gateway_rest_api.products-svc-api-gateway.id
   parent_id   = aws_api_gateway_rest_api.products-svc-api-gateway.root_resource_id
-  path_part   = "/backend/validate"
+  path_part   = "backend"
+}
+
+resource "aws_api_gateway_resource" "products-svc-api-gateway-resource-validate" {
+  rest_api_id = aws_api_gateway_rest_api.products-svc-api-gateway.id
+  parent_id   = aws_api_gateway_resource.products-svc-api-gateway-resource-backend.id
+  path_part   = "validate"
 }
 
 resource "aws_api_gateway_method" "products-svc-api-gateway-resource-method" {
   rest_api_id   = aws_api_gateway_rest_api.products-svc-api-gateway.id
-  resource_id   = aws_api_gateway_resource.products-svc-api-gateway-resource.id
+  resource_id   = aws_api_gateway_resource.products-svc-api-gateway-resource-validate.id
   http_method   = "POST"
   authorization = "NONE"
 }
